@@ -9,7 +9,7 @@
     <div class="containerPrincipal">
       <div class="FormBot">
         <form @submit.prevent="login" class="wrapForm">
-          <h4 class="TextLeft">Olá!</h4>
+          <h4 class="TextLeft">Olá, Empresa!</h4>
           <p class="FormPLeft">Faça o seu cadastro por aqui!</p>
 
           <div class="input-container">
@@ -71,12 +71,12 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 90vh;
+  min-height: 100vh;
   background: #00546B;
 }
 
 .containerPrincipal {
-  width: 440px;
+  width: 550px;
   background-color: white;
   padding: 40px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -95,7 +95,7 @@ body {
 
 .input-container {
   position: relative;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .inputForm {
@@ -133,6 +133,7 @@ body {
   border: 2px solid #00546B;
   color: #00546B;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .btnCriar:hover {
