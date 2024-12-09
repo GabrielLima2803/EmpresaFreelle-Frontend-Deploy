@@ -5,6 +5,10 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import './plugins/axios';
+
+import '@mdi/font/css/materialdesignicons.min.css';
+
 
 const app = createApp(App)
 
