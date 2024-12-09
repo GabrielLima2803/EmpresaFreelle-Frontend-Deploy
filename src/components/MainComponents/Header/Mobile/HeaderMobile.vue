@@ -5,7 +5,7 @@
   <div class="header-small">
     <div class="header-container">
       <div class="header-left">
-        <router-link to="/" class="btn"><img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="" class="img"></router-link>
+        <router-link to="/" class="btn"><img src="https://i.ibb.co/Qk43Z1V/icon-freelle-empresa.png" alt="" class="img"></router-link>
       </div>
       <logo-title class="pl-0" />
       <div class="icons">
@@ -18,7 +18,7 @@
 <style scoped>
 .header-small {
   width: 100%;
-  background-color: #006B63; 
+  background-color: #00546B; 
   margin: 0;
   height: 4em;
 }

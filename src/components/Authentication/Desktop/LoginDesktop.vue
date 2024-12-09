@@ -6,12 +6,12 @@ import { HeaderDesktop, FooterDesktop } from '@/components';
 <HeaderDesktop/>
  <div class="wrapContainer">
     <div class="FormTop">
-      <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo-top" />
+      <img src="https://i.ibb.co/Qk43Z1V/icon-freelle-empresa.png" alt="Logo" class="logo-top" />
     </div>
     <div class="containerPrincipal">
       <div class="FormBot">
         <form @submit.prevent="login" class="wrapForm">
-          <h4 class="TextLeft">Olá!</h4>
+          <h4 class="TextLeft">Olá, Empresa!</h4>
           <p class="FormPLeft">Para continuar, digite seu e-mail</p>
 
           <div class="input-container">
@@ -47,13 +47,12 @@ import { HeaderDesktop, FooterDesktop } from '@/components';
       </div>
     </div>
   </div>
-  <FooterDesktop/>
 </template>
 
 
 <style scoped>
 body {
-  background: #006B63;
+  background: #00546B;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -70,7 +69,7 @@ body {
   align-items: center;
   width: 100%;
   min-height: 100vh;
-  background: #006B63;
+  background: #00546B;
 }
 
 .containerPrincipal {
@@ -105,7 +104,7 @@ body {
   width: 100%;
   height: 50px;
   padding: 15px;
-  border: 1px solid #006B63;
+  border: 1px solid #00546B;
   outline: none;
   transition: all 0.3s;
 }
@@ -114,7 +113,7 @@ body {
 .inputForm.active + .labelForm {
   top: -10px;
   font-size: 12px;
-  color: #006B63;
+  color: #00546B;
 }
 
 .labelForm {
@@ -141,27 +140,27 @@ body {
 }
 
 .btnLogin {
-  background-color: #006B63;
+  background-color: #00546B;
   color: white;
   border: none;
 }
 
 .btnCriar {
   background-color: white;
-  border: 2px solid #006B63;
-  color: #006B63;
+  border: 2px solid #00546B;
+  color: #00546B;
   transition: all 0.3s ease;
 }
 
 .btnCriar:hover {
-  background-color: #006B63;
+  background-color: #00546B;
   color: white;
 }
 
 .btnSenha {
   margin-top: 20px;
   border: none;
-  border-bottom: solid 1px #006B63;
+  border-bottom: solid 1px #00546B;
   background-color: white;
   color: gray;
   font-size: 15px;
@@ -169,7 +168,7 @@ body {
 }
 
 .btnSenha:hover {
-  color: #006B63;
+  color: #00546B;
   transition: 0.7s;
 }
 
@@ -185,7 +184,7 @@ body {
 }
 
 .footer {
-  background: #006B63;
+  background: #00546B;
 }
 
 @media (max-width: 768px) {

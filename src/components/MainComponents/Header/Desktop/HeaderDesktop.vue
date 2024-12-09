@@ -7,7 +7,7 @@
     <div class="header-container">
       <div class="header-left">
         <router-link to="/" class="btn">
-          <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="img" />
+          <img src="https://i.ibb.co/Qk43Z1V/icon-freelle-empresa.png" alt="Logo" class="img" />
         </router-link>
       </div>
       <div class="header-right">
@@ -53,13 +53,14 @@
 
 .header {
   width: 100%;
-  background-color: #006b63;
+  background-color: #00546B;
   margin: 0;
 }
 
 .img {
   width: 63px;
   height: 60px;
+  margin-top: 5px;
 }
 
 .header-right {
@@ -123,7 +124,7 @@ button {
 .user-menu {
   position: absolute;
   background-color: white;
-  color: #006b63;
+  color: #00546B;
   padding: 1em;
   border-radius: 0.5em;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
