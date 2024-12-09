@@ -4,7 +4,7 @@
 <template>
   <div class="loading-page">        
       <div class="body">
-          <img src="https://i.ibb.co/FVnJHfy/logo-freelle.png" alt="Loading Logo">
+          <img src="https://i.ibb.co/zbXY48X/empresa-freelle.jpg" alt="Loading Logo">
       </div>
     </div>
 </template>
