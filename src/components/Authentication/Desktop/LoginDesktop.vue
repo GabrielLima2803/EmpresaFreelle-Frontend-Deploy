@@ -1,5 +1,5 @@
 <script setup>
-import { HeaderDesktop, FooterDesktop } from '@/components';
+import { HeaderDesktop } from '@/components';
 </script>
 
 <template>
