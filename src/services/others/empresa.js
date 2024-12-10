@@ -26,4 +26,4 @@ class EmpresaService {
 
 }
  
-export default EmpresaService();
+export default new EmpresaService();

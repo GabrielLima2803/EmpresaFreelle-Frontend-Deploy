@@ -3,7 +3,7 @@ import { computed, reactive } from "vue";
 import { useLoadingStore } from "./loading";
 import EmpresaService from '../../services/others/empresa';
 
-const empresaService = new EmpresaService();
+const empresaService = EmpresaService;
 
 export const useEmpresaStore = defineStore('empresas', () => {
     const state = reactive({

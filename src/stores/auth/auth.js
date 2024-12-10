@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, reactive } from "vue";
 import { useLoadingStore } from '../others/loading';
-import AuthService from '@/services';
+import AuthService from '@/services/auth/auth';
 
 const authService = new AuthService();
 
