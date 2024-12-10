@@ -1,6 +1,26 @@
 <script setup>
-import { HeaderDesktop } from '@/components';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores';
+
+const email = ref('');
+const password = ref('');
+const router = useRouter();
+const authStore = useAuthStore();
+
+async function login() {
+  const credentials = { value: email.value, password: password.value };
+  try {
+    await authStore.LoginEmpresa(credentials)
+    console.log('Login bem-sucedido:');
+    router.push('/home'); 
+  } catch (error) {
+    console.error('Erro no login:', error);
+    alert('Credenciais inválidas, tente novamente.');
+  } 
+}
 </script>
+
 
 <template>
 <HeaderDesktop/>
@@ -19,9 +39,9 @@ import { HeaderDesktop } from '@/components';
               type="text"
               id="username"
               class="inputForm"
-              v-model="username"
+              v-model="email"
             />
-            <label for="username" :class="{'active': username !== ''}" class="labelForm">E-mail ou Username</label>
+            <label for="email" :class="{'active': email !== ''}" class="labelForm">E-mail</label>
           </div>
           <div class="input-container">
             <input
@@ -34,7 +54,7 @@ import { HeaderDesktop } from '@/components';
           </div>
 
           <button type="button" style="margin-top: 10px" class="btnSenha">
-            <router-link to="/recuperacao" class="btnSenha">Esqueci minha senha</router-link>
+            <router-link to="/forgot-password" class="btnSenha">Esqueci minha senha</router-link>
           </button>
           <button type="submit" class="btnLogin mt-3">Entrar</button>
           <router-link to="/cadastro">
@@ -137,6 +157,7 @@ body {
   margin-top: 15px;
   font-size: 18px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .btnLogin {

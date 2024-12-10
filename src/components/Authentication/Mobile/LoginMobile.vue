@@ -34,7 +34,7 @@ import { HeaderMobile, FooterMobile } from '@/components';
           </div>
 
           <button type="button" style="margin-top: 10px" class="btnSenha">
-            <router-link to="/recuperacao" class="btnSenha">Esqueci minha senha</router-link>
+            <router-link to="/forgot-password" class="btnSenha">Esqueci minha senha</router-link>
           </button>
           <button type="submit" class="btnLogin mt-3">Entrar</button>
           <router-link to="/cadastro">

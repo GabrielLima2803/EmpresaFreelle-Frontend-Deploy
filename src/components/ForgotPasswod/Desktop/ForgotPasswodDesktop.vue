@@ -1,11 +1,26 @@
 <script setup>
+import { ref } from "vue";
+import { useAuthStore } from "@/stores";
+import { useRouter } from "vue-router";
 
+const email = ref('')
+const authStore = useAuthStore()
+const router = useRouter()
+
+const forgotPassword = async () => {
+  try {
+    await authStore.ForgotPasswordEmpresa(email.value)
+    router.push('/reset-password')
+  } catch (error) {
+    console.error(error)
+  }
+}
 </script>
 
 <template>
   <div class="wrapContainer">
     <div class="FormTop">
-      <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo" />
+      <img src="https://i.ibb.co/Qk43Z1V/icon-freelle-empresa.png" alt="Logo" class="logo" />
     </div>
     <div class="containerPrincipal">
       <div class="FormBot">
@@ -33,7 +48,7 @@
 
 <style scoped>
 body {
-  background: #006B63;
+  background: #00546B;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -46,11 +61,11 @@ body {
 .wrapContainer {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 90vh;
-  background: #006B63;
+  min-height: 100vh;
+  background: #00546B;
   padding-top: 20px;
 }
 
@@ -80,7 +95,7 @@ body {
   width: 100%;
   height: 50px;
   padding: 15px;
-  border: 1px solid #006B63;
+  border: 1px solid #00546B;
   outline: none;
   transition: all 0.3s;
 }
@@ -89,7 +104,7 @@ body {
 .labelForm.active {
   top: -10px;
   font-size: 12px;
-  color: #006B63;
+  color: #00546B;
 }
 
 .labelForm {
@@ -109,13 +124,14 @@ body {
   font-size: 18px;
   font-weight: bold;
   background-color: white;
-  border: 2px solid #006B63;
-  color: #006B63;
+  border: 2px solid #00546B;
+  color: #00546B;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .btnCriar:hover {
-  background-color: #006B63;
+  background-color: #00546B;
   color: white;
 }
 
@@ -125,7 +141,7 @@ body {
 }
 
 .footer {
-  background: #006B63;
+  background: #00546B;
 }
 
 @media (max-width: 768px) {
