@@ -1,8 +1,10 @@
 <script setup>
 import { useLoadingStore } from '@/stores';
+import { computed } from 'vue';
 import { LoadingPage } from './components';
 
-const { isLoading } = useLoadingStore();
+const loadingStore = useLoadingStore()
+const isLoading = computed(() => loadingStore.isLoading);
 </script>
 
 <template>
