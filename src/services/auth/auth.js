@@ -3,7 +3,7 @@ import axios from "axios";
 class AuthService {
      async RegisterEmpresa(empresaData) {
         try {
-            const response = await axios.post("register/", empresaData);
+            const response = await axios.post("register-empresa/", empresaData);
             return response.data;
         } catch (error) {
             console.error('API request error:', error); 
