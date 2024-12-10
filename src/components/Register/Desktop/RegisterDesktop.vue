@@ -1,4 +1,41 @@
 <script setup>
+import { onMounted, ref } from 'vue';
+import { useAuthStore } from '@/stores';
+import { useRouter } from 'vue-router';
+const email = ref('');
+const cnpj = ref('');
+const username = ref('');
+const description = ref('');
+const password = ref('');
+const passwordConfirm = ref('');
+
+const router = useRouter();
+const authStore = useAuthStore();
+
+const register = async () => {
+    if (password.value !== passwordConfirm.value) {
+      alert('As senhas não conferem!');
+      return;
+    }
+    const empresaData = {
+      email: email.value,
+      cnpj: cnpj.value,
+      nome: username.value,
+      descricao: description.value,
+      password: password.value,
+    }
+
+    try {
+      await authStore.RegisterEmpresa(empresaData)
+      router.push('/');
+    } catch (error) { 
+      console.error('Login failed', error);
+    }
+}
+
+onMounted(() => {
+
+})
 
 </script>
 
@@ -8,7 +45,7 @@
 
     <div class="containerPrincipal">
       <div class="FormBot">
-        <form @submit.prevent="login" class="wrapForm">
+        <form @submit.prevent="register" class="wrapForm">
           <h4 class="TextLeft">Olá, Empresa!</h4>
           <p class="FormPLeft">Faça o seu cadastro por aqui!</p>
 
@@ -19,14 +56,13 @@
 
           <div class="input-container">
             <input type="text" id="cnpj" class="inputForm" v-model="cnpj" :class="{'active': cnpj}" required />
-            <label for="cnpj" class="labelForm">Digite sua cnpj...</label>
+            <label for="cnpj" class="labelForm">Digite sua CNPJ...</label>
           </div>
-          
+
           <div class="input-container">
             <input type="text" id="username" class="inputForm" v-model="username" :class="{'active': username}" required />
             <label for="username" class="labelForm">Digite o nome da sua empresa...</label>
           </div>
-
 
           <div class="input-container">
             <input type="text" id="description" class="inputForm" v-model="description" :class="{'active': description}" required />
@@ -43,9 +79,7 @@
             <label for="password-confirm" class="labelForm">Confirme sua senha...</label>
           </div>
 
-          <router-link to="/cadastro">
-            <button type="button" class="btnCriar">Criar conta</button>
-          </router-link>
+          <button type="submit" class="btnCriar">Criar conta</button>
           <p class="FormP Pf">Protegido por reCAPTCHA - Privacidade | Condições</p>
         </form>
       </div>

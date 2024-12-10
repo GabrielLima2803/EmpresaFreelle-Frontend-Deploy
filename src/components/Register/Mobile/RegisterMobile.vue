@@ -1,5 +1,44 @@
 <script setup>
 import { FooterMobile } from "@/components";
+import { onMounted, ref } from 'vue';
+import { useAuthStore } from '@/stores';
+import { useRouter } from 'vue-router';
+const email = ref('');
+const cnpj = ref('');
+const username = ref('');
+const description = ref('');
+const password = ref('');
+const passwordConfirm = ref('');
+
+const router = useRouter();
+const authStore = useAuthStore();
+
+const register = async () => {
+    if (password.value !== passwordConfirm.value) {
+      alert('As senhas não conferem!');
+      return;
+    }
+    const empresaData = {
+      email: email.value,
+      cnpj: cnpj.value,
+      nome: username.value,
+      descricao: description.value,
+      password: password.value,
+    }
+
+    try {
+      await authStore.RegisterEmpresa(empresaData)
+      router.push('/');
+    } catch (error) { 
+      console.error('Login failed', error);
+    }
+}
+
+onMounted(() => {
+
+})
+
+
 </script>
 
 <template>
@@ -8,7 +47,7 @@ import { FooterMobile } from "@/components";
 
     <div class="containerPrincipal">
       <div class="FormBot">
-        <form @submit.prevent="login" class="wrapForm">
+        <form @submit.prevent="register" class="wrapForm">
           <h4 class="TextLeft">Olá!</h4>
           <p class="FormPLeft">Faça o seu cadastro por aqui!</p>
 
