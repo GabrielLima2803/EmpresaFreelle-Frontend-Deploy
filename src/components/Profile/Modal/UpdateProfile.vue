@@ -22,13 +22,13 @@ const empresaData = {
             <input type="file" id="foto" accept="image/*" />
           </div>
           <div class="story-container">
-  <textarea
-    id="descricao"
-    class="inputForm"
-    v-model="empresaData.descricao"
-    rows="4"
-  />
-</div>
+            <textarea
+              id="descricao"
+              class="inputForm"
+              v-model="empresaData.descricao"
+              rows="4"
+            />
+          </div>
         </div>
 
         <form @submit.prevent="updateProfile" class="wrapForm">
@@ -46,7 +46,6 @@ const empresaData = {
             <label for="telefone">Telefone</label>
             <input type="text" id="telefone" class="inputForm" v-model="empresaData.telefone" />
           </div>
-
           <button type="submit" class="btn-submit">CONFIRMAR ALTERAÇÕES</button>
         </form>
       </div>
@@ -57,8 +56,8 @@ const empresaData = {
     </div>
   </div>
 </template>
-
 <style scoped>
+
 body {
   background-color: #00546b;
   height: 100vh;
@@ -95,8 +94,16 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  min-height: 60vh; 
+  justify-content: space-between; 
 }
-
+.wrapForm {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Permite rolagem vertical */
+  max-height: 400px; /* Define um limite para a altura, ajustável conforme necessário */
+}
 .update-text {
   font-size: 14px;
   color: #666;
@@ -240,6 +247,123 @@ textarea.inputForm:focus {
 
 .input-container input[type='file']:focus + label {
   color: #003f3a;
+}
+@media (max-width: 768px) {
+  .containerPrincipal {
+    padding: 20px;
+    width: 80%;
+    min-height: 70vh; /* Aumenta a altura mínima em telas menores */
+  }
+
+  .profile-form-container {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .profile-section, 
+  .wrapForm {
+    width: 100%;
+  }
+
+  .btn-submit {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .containerPrincipal {
+    width: 100%; /* Assegura que o contêiner ocupa toda a largura da tela */
+    padding: 15px; /* Menos padding para dar mais espaço útil */
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura total */
+  }
+
+  .profile-form-container {
+    flex-direction: column; /* Alinha as seções em coluna */
+    gap: 10px; /* Menos espaçamento entre os elementos */
+    width: 100%; /* Garante que a largura seja 100% */
+    overflow: hidden; /* Garante que nada ultrapasse a largura */
+  }
+
+  .profile-section,
+  .wrapForm {
+    width: 100%; /* Garantir que os elementos não excedam a largura do contêiner */
+  }
+
+  .profile-img {
+    width: 120px; /* Tamanho reduzido da imagem para telas menores */
+    height: 120px; /* Altura ajustada proporcionalmente */
+  }
+
+  .input-container {
+    width: 100%;
+
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px; /* Menor tamanho de texto em dispositivos menores */
+    max-width: 100%; /* Evita que o botão ultrapasse os limites */
+  }
+
+  .update-text,
+  .privacy {
+    font-size: 12px;
+    text-align: center; /* Centraliza o texto para visualização melhor em telas menores */
+    margin-bottom: 10px;
+  }
+
+  .story-container {
+    width: 100%; /* Garantir que o container da descrição não ultrapasse a largura */
+  }
+
+  textarea.inputForm {
+    width: 100%; /* Garante que a área de texto ocupe toda a largura disponível */
+    resize: none; /* Impede o redimensionamento */
+    height: 80px; /* Ajuste de altura */
+  }
+}
+
+@media (max-width: 480px) {
+  .containerPrincipal {
+    width: 100%;
+    padding: 10px;
+    max-width: 100%; /* Garantir que o contêiner ocupe 100% da largura */
+  }
+
+  .logo-top {
+    width: 50px;
+    margin-bottom: 10px;
+  }
+
+  .profile-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .btn-submit {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .input-container label {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  textarea.inputForm {
+    width: 100%; /* Área de texto ocupa toda a largura */
+    height: 80px; /* Reduz a altura */
+  }
+
+  .update-text {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .privacy {
+    font-size: 10px;
+  }
 }
 
 </style>

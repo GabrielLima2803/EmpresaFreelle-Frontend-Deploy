@@ -1,9 +1,9 @@
 <script setup>
-import CreateProject from './Modal/CreateProject.vue';
+import UpdateProfile from './Modal/UpdateProfile.vue';
 </script>
 
 <template>
-    <CreateProject/>
+    <UpdateProfile/>
 </template>
 
 <style scoped>
