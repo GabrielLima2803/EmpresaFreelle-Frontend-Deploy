@@ -28,6 +28,11 @@ const router = createRouter({
       path: '/home',
       name: 'Profile',
       component: () => import('../views/ProfileView.vue'),
+    },
+    {
+      path: '/home/update',
+      name: 'UpdateProfile',
+      component: () => import('@/components/Profile/Modal/UpdateProfile.vue'),
     }
   ],
 })
