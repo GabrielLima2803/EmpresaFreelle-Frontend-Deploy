@@ -1,9 +1,9 @@
 <script setup>
-import UpdateProfile from './Modal/UpdateProfile.vue';
+import ProfileDesktop from './Desktop/ProfileDesktop.vue';
 </script>
 
 <template>
-    <UpdateProfile/>
+    <ProfileDesktop/>
 </template>
 
 <style scoped>
