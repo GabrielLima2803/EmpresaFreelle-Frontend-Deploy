@@ -1,5 +1,11 @@
 <script setup>
+import { ref } from 'vue'
+import CardRequest from "../Card/CardRequest.vue"
+const isSidebarVisible = ref(false)
 
+const toggleSidebar = () => {
+  isSidebarVisible.value = !isSidebarVisible.value
+}
 </script>
 
 <template>
@@ -11,6 +17,8 @@
         </router-link>
       </div>
       <div class="header-right">
+        <HeaderModal />
+        <button class="btn" @click="toggleSidebar">Solicitações</button>
         <button class="btn">Português</button>
 
         <div v-if="isLogged" class="user-avatar-container">
@@ -27,10 +35,16 @@
         </div>
 
         <div v-else class="auth-buttons">
-          <router-link to="/login" class="btn">Entrar</router-link>
-          <router-link to="/adicao-job" class="btn btn-i">Inscrição</router-link>
+          <button class="btn btn-i">Sair</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div v-if="isSidebarVisible" class="sidebar">
+    <div class="sidebar-content">
+      <CardRequest/>
     </div>
   </div>
 </template>
@@ -58,8 +72,8 @@
 }
 
 .img {
-  width: 63px;
-  height: 60px;
+  width: 60px;
+  height: 50px;
   margin-top: 5px;
 }
 
@@ -139,5 +153,46 @@ button {
 
 .user-menu p:hover {
   color: #005c53;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
+  background-color: #B6B6B6;
+  color: white;
+  padding: 1em;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h3 {
+  margin-bottom: 1em;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 1em;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: white;
+}
+
+.sidebar ul li a:hover {
+  color: #00B5E2;
 }
 </style>
