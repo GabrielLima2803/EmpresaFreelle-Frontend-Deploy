@@ -23,6 +23,21 @@ class EmpresaService {
             throw error;  
         }
     }
+    async updateMeUser(authToken, userData) {
+        try {
+            const response = await axios.patch('/usuarios/update_me/', userData, {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+            console.log('Resposta da API:', response.data); 
+            return response.data;
+          } catch (error) {
+            console.error('Erro na API:', error);
+            throw error;
+          }
+        }
 
 }
  

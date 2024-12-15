@@ -1,11 +1,43 @@
 <script setup>
-const empresaData = {
+import { ref } from 'vue';
+import { useEmpresaStore } from '@/stores/others/empresa';
+import { useAuthStore } from '@/stores/auth/auth';
+import { useRouter } from 'vue-router';
+
+const empresaStore = useEmpresaStore();
+const authStore = useAuthStore();
+const router = useRouter();
+
+const empresaData = ref({
   username: 'empresa',
   email: 'empresa@gmail.com',
   telefone: '199993',
   foto: 'https://i.ibb.co/Qk43Z1V/icon-freelle-empresa.png',
-  descricao: 'Descriao de comentarios',
-}
+  descricao: 'Descricao de comentarios',
+});
+
+const fotoInput = ref(null);
+
+const updateProfile = async () => {
+  const formData = new FormData();
+    
+  formData.append('username', empresaData.value.username);
+  formData.append('email', empresaData.value.email);
+  formData.append('telefone', empresaData.value.telefone);
+  formData.append('descricao', empresaData.value.descricao);
+  
+  if (fotoInput.value.files.length > 0) {
+    formData.append('foto', fotoInput.value.files[0]);
+  }
+
+  try {
+    const authToken = authStore.token;
+    await empresaStore.updateMeUser(authToken, formData);
+    router.push('/home');  
+  } catch (error) {
+    console.error('Erro ao atualizar o perfil:', error);
+  }
+};
 </script>
 
 <template>
@@ -19,7 +51,7 @@ const empresaData = {
           <img :src="empresaData.foto" alt="Foto de perfil" class="profile-img" />
           <div class="input-container">
             <label for="foto">Escolha uma foto</label>
-            <input type="file" id="foto" accept="image/*" />
+            <input type="file" id="foto" accept="image/*" ref="fotoInput" />
           </div>
           <div class="story-container">
             <textarea
@@ -56,6 +88,7 @@ const empresaData = {
     </div>
   </div>
 </template>
+
 <style scoped>
 
 body {

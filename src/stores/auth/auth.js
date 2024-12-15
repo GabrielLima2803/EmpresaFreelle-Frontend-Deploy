@@ -12,6 +12,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     const loadingStore = useLoadingStore()
     const isLogged = computed(() => !!state.token)
+    const token = computed(() => state.token)
 
     function setToken(newToken) {
         state.token = newToken;
@@ -86,6 +87,7 @@ export const useAuthStore = defineStore('auth', () => {
         LoginEmpresa,
         ForgotPasswordEmpresa,
         ResetPasswordEmpresa,
+        token,
     }
 
 })
