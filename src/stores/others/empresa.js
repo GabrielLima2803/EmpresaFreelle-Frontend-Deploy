@@ -18,7 +18,7 @@ export const useEmpresaStore = defineStore('empresas', () => {
         loadingStore.startLoading();
         try {
             const data = await empresaService.getMeEmpresa(token);  
-            state.currentUser = data;  
+            state.currentEmpresa = data;  
           } catch (error) {
             console.error('Erro ao buscar o usuário logado:', error);
           } finally {
@@ -26,8 +26,30 @@ export const useEmpresaStore = defineStore('empresas', () => {
           }
     }
 
+    const updateMeUser = async (authToken, formData) => {
+      loadingStore.startLoading();
+    
+      try {
+        const response = await empresaService.updateMeUser(authToken, formData);
+        
+        if (JSON.stringify(state.currentUser) !== JSON.stringify(response.data)) {
+          console.log('Dados recebidos:', response.data);
+          state.currentUser = response.data; 
+        }
+    
+        state.error = null;
+      } catch (error) {
+        state.error = 'Erro ao atualizar o perfil';
+        console.error('Erro ao atualizar o perfil:', error);
+      } finally {
+        loadingStore.stopLoading();
+      }
+    };
+  
+
     return {
         currentEmpresa,
-        getMeEmpresa
+        getMeEmpresa,
+        updateMeUser
     }
 })

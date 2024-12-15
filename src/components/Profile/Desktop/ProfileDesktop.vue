@@ -1,26 +1,64 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue';
 import { HeaderDesktop, FooterDesktop } from '@/components';
-import CardImages from "./Others/CardImages.vue"
+import { useEmpresaStore } from '@/stores';
+import CardImages from "./Others/CardImages.vue";
 import GetAllProjects from './Others/GetAllProjects.vue';
 import CreateProject from './Others/CreateProject.vue';
+
+const empresaStore = useEmpresaStore();
+const empresaCurrent = ref({});  // Inicializando como objeto vazio
+
+function calculateYearsSince(dateString) {
+  const createdAt = new Date(dateString);
+  const currentDate = new Date();
+  const years = currentDate.getFullYear() - createdAt.getFullYear();
+  const month = currentDate.getMonth() - createdAt.getMonth();
+  if (month < 0 || (month === 0 && currentDate.getDate() < createdAt.getDate())) {
+    return years - 1;
+  }
+  return years;
+}
+
 const provider = ref({
-  foto: 'https://via.placeholder.com/150',
-  name: 'Maria Silva',
-  username: '@maria.art',
+  foto: '',
+  name: '',
+  username: '',
   location: 'São Paulo, Brasil',
-  language: 'Português',
+  language: '',
   rating: 4.8,
   reviews: 120,
-  totalOrders: 340,
-  yearsInPlatform: 5,
-  expertise: 'Design Gráfico, Ilustração',
-  about: 'Supera é uma prestigiada casa culinária conhecida pela fusão de sabores autênticos e técnicas inovadoras. Desde sua fundação, a marca tem se destacado por transformar pratos simples em experiências gastronômicas inesquecíveis. A proposta da Supera é ir além da simples refeição: cada prato é uma obra de arte, pensada para surpreender tanto no sabor quanto na apresentação. Com um menu que mistura ingredientes locais e internacionais, a Supera traz uma abordagem única para a cozinha, respeitando as tradições culinárias, mas sempre buscando uma nova perspectiva. Além de ser um local para aqueles que amam se deliciar com boa comida, Supera também se tornou um centro de aprendizado, oferecendo cursos e workshops de culinária para quem deseja expandir suas habilidades na cozinha. Seja em suas receitas inovadoras ou em suas apresentações impecáveis, Supera é sinônimo de qualidade, sabor e criatividade, tornando-se uma referência no mundo gastronômico.',
-})
+  totalOrders: 0,
+  yearsInPlatform: 0, 
+  expertise: '',
+  about: '',
+});
+
+onMounted(() => {
+  empresaStore.getMeEmpresa().then(() => {
+    empresaCurrent.value = empresaStore.currentEmpresa;
+    
+    provider.value = {
+      foto: empresaCurrent.value.foto.url || '',
+      name: empresaCurrent.value.name || '',
+      username: empresaCurrent.value.username || '',
+      location: 'São Paulo, Brasil', 
+      language: empresaCurrent.value.linguagem_principal || '',
+      rating: 4.8,
+      reviews: 120, 
+      totalOrders: empresaCurrent.value.total_pedidos || 0,
+      yearsInPlatform: calculateYearsSince(empresaCurrent.value.created_at),
+      expertise: empresaCurrent.value.especializacao || '',
+      about: empresaCurrent.value.biografia || '',
+      areaAtuacao: empresaCurrent.value. area_atuacao || 'Gastronomia',
+    };
+  });
+});
 </script>
 
 <template>
     <HeaderDesktop/>
+    {{empresaStore.currentEmpresa}}
     <div class="container">
   <div class="profile-container">
     <div class="profile-left">
@@ -72,7 +110,7 @@ const provider = ref({
       </div>
     </div>
   </div>
-      <CardImages textoSecao="Desenvolvimento Web" reviewCard="255"/>
+      <CardImages :textoSecao="provider.areaAtuacao" reviewCard="255"/>
       <GetAllProjects/>
       <CreateProject/>
     </div>
