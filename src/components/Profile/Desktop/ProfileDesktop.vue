@@ -7,7 +7,7 @@ import GetAllProjects from './Others/GetAllProjects.vue';
 import CreateProject from './Others/CreateProject.vue';
 
 const empresaStore = useEmpresaStore();
-const empresaCurrent = ref({});  // Inicializando como objeto vazio
+const empresaCurrent = ref({});  
 
 function calculateYearsSince(dateString) {
   const createdAt = new Date(dateString);
@@ -25,6 +25,7 @@ const provider = ref({
   name: '',
   username: '',
   location: 'São Paulo, Brasil',
+  city: '',
   language: '',
   rating: 4.8,
   reviews: 120,
@@ -42,7 +43,8 @@ onMounted(() => {
       foto: empresaCurrent.value.foto.url || '',
       name: empresaCurrent.value.name || '',
       username: empresaCurrent.value.username || '',
-      location: 'São Paulo, Brasil', 
+      location: empresaCurrent.value.nacionalidade.nome, 
+      city: empresaCurrent.value.nacionalidade.cidade, 
       language: empresaCurrent.value.linguagem_principal || '',
       rating: 4.8,
       reviews: 120, 
@@ -58,7 +60,7 @@ onMounted(() => {
 
 <template>
     <HeaderDesktop/>
-    {{empresaStore.currentEmpresa}}
+    {{empresaStore.currentEmpresa.foto}}
     <div class="container">
   <div class="profile-container">
     <div class="profile-left">
@@ -70,7 +72,7 @@ onMounted(() => {
             <span class="username">{{ provider.username }}</span>
             <i class="mdi mdi-check-decagram verified-icon"></i>
           </h1>
-          <p class="location"><i class="mdi mdi-map-marker"></i> {{ provider.location }}</p>
+          <p class="location"><i class="mdi mdi-map-marker"></i> {{ provider.location }}, {{ provider.city }}</p>
           <p class="location">
             <i class="mdi mdi-translate"></i> {{ provider.language }}
             <router-link to="/home/update" class="reset">

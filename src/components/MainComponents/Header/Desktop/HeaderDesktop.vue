@@ -1,11 +1,28 @@
 <script setup>
-import { ref } from 'vue'
-import CardRequest from "../Card/CardRequest.vue"
-const isSidebarVisible = ref(false)
+import { ref } from "vue";
+import CardRequest from "../Card/CardRequest.vue";
+import { useAuthStore } from "@/stores";
+import { useRouter } from "vue-router";
+
+const authStore = useAuthStore();
+const router = useRouter()
+
+const isSidebarVisible = ref(false);
+// const showMenu = ref(false);
 
 const toggleSidebar = () => {
-  isSidebarVisible.value = !isSidebarVisible.value
-}
+  isSidebarVisible.value = !isSidebarVisible.value;
+};
+
+// const toggleMenu = () => {
+//   showMenu.value = !showMenu.value;
+// };
+
+const logout = () => {
+  authStore.LogoutUser();
+  // showMenu.value = false;
+  router.push("/")
+};
 </script>
 
 <template>
@@ -21,21 +38,21 @@ const toggleSidebar = () => {
         <button class="btn" @click="toggleSidebar">Solicitações</button>
         <button class="btn">Português</button>
 
-        <div v-if="isLogged" class="user-avatar-container">
+        <!-- <div v-if="isLogged" class="user-avatar-container">
           <button @click="toggleMenu" class="user-avatar-button">
             <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar" />
           </button>
 
           <div v-if="showMenu" class="user-menu">
-            <p @click="logout">Sair</p>
+            <button @click="logout">Sair</button>
             <router-link to="/profile">
               <p>Ver perfil</p>
             </router-link>
           </div>
-        </div>
+        </div> -->
 
-        <div v-else class="auth-buttons">
-          <button class="btn btn-i">Sair</button>
+        <div class="auth-buttons">
+          <button @click="logout" class="btn btn-i">Sair</button>
         </div>
       </div>
     </div>

@@ -9,40 +9,55 @@ const authStore = useAuthStore();
 const router = useRouter();
 
 const empresaData = ref({
-  username: 'empresa',
-  email: 'empresa@gmail.com',
-  telefone: '199993',
-  foto: 'https://i.ibb.co/Qk43Z1V/icon-freelle-empresa.png',
-  descricao: 'Descricao de comentarios',
+  username: '',
+  email: '',
+  telefone: '',
+  foto: '', // Armazena temporariamente o preview da foto
+  biografia: '',
 });
 
 const fotoInput = ref(null);
 
+const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      empresaData.value.foto = e.target.result; 
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
 const updateProfile = async () => {
   const formData = new FormData();
-    
+  
+  // Adiciona os dados do formulário ao FormData
   formData.append('username', empresaData.value.username);
   formData.append('email', empresaData.value.email);
   formData.append('telefone', empresaData.value.telefone);
-  formData.append('descricao', empresaData.value.descricao);
-  
+  formData.append('biografia', empresaData.value.biografia);
+
+  // Adiciona a foto ao FormData apenas se um arquivo for selecionado
   if (fotoInput.value.files.length > 0) {
-    formData.append('foto', fotoInput.value.files[0]);
+    formData.append('foto', fotoInput.value.files[0]); // Envia o arquivo diretamente
   }
 
   try {
     const authToken = authStore.token;
+    // Envia o FormData com uma única requisição
     await empresaStore.updateMeUser(authToken, formData);
-    router.push('/home');  
+    router.push('/home'); // Redireciona para a página inicial após o sucesso
   } catch (error) {
     console.error('Erro ao atualizar o perfil:', error);
   }
 };
 </script>
 
+
 <template>
   <div class="wrapContainer">
-    <img :src="empresaData.foto" alt="Logo" class="logo-top" />
+    <img src="https://i.ibb.co/Qk43Z1V/icon-freelle-empresa.png" alt="Logo" class="logo-top" />
     <div class="containerPrincipal">
       <p class="update-text">Precisa atualizar seu perfil? <router-link to="/home">Vá para seu perfil</router-link></p>
 
@@ -51,13 +66,13 @@ const updateProfile = async () => {
           <img :src="empresaData.foto" alt="Foto de perfil" class="profile-img" />
           <div class="input-container">
             <label for="foto">Escolha uma foto</label>
-            <input type="file" id="foto" accept="image/*" ref="fotoInput" />
+            <input type="file" id="foto" accept="image/*" ref="fotoInput" @change="handleFileChange" />
           </div>
           <div class="story-container">
             <textarea
-              id="descricao"
+              id="biografia"
               class="inputForm"
-              v-model="empresaData.descricao"
+              v-model="empresaData.biografia"
               rows="4"
             />
           </div>
