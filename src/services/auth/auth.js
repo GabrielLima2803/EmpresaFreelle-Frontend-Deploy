@@ -6,7 +6,7 @@ class AuthService {
             const response = await axios.post("register-empresa/", empresaData);
             return response.data;
         } catch (error) {
-            console.error('API request error:', error); 
+            console.error('API request error:', error);
             throw error;
         }
     }
@@ -16,7 +16,7 @@ class AuthService {
             const response = await axios.post("login/", credentials);
             return response.data;
         } catch (error) {
-            console.error('API request error:', error); 
+            console.error('API request error:', error);
             throw error;
         }
     }
@@ -26,16 +26,16 @@ class AuthService {
             const response = await axios.post("forgot-password/", { email });
             return response.data;
         } catch (error) {
-            console.error('API request error:', error); 
+            console.error('API request error:', error);
             throw error;
         }
     }
-    async ResetPasswordEmpresa(resetData) {
+    async ResetPasswordEmpresa(reset_code, new_passoword) {
         try {
-            const response = await axios.post("reset-password/", resetData);
+            const response = await axios.post("reset-password/", reset_code, new_passoword);
             return response.data;
         } catch (error) {
-            console.error('API request error:', error); 
+            console.error('API request error:', error);
             throw error;
         }
     }

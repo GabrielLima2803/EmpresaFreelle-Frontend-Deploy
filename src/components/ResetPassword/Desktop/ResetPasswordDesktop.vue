@@ -5,10 +5,10 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const isSmallScreen = ref(false);
+const confirmPassword = ref("");
 const resetData = ref({
-  code: Array(6).fill(''),
+  reset_code: Array(6).fill(''),
   new_password: "",
-  confirmPassword: "",
 });
 
 const authStore = useAuthStore();
@@ -30,11 +30,10 @@ const moveFocus = (event, currentIndex) => {
     inputs[currentIndex - 1].focus();
   }
 };
-
 const resetPassword = async () => {
-  const codeString = resetData.value.code.join(''); 
+  const codeString = resetData.value.reset_code.join('');
 
-  if (resetData.value.new_password !== resetData.value.confirmPassword) {
+  if (resetData.value.new_password !== confirmPassword.value) {
     alert("As senhas não coincidem.");
     return;
   }
@@ -43,19 +42,24 @@ const resetPassword = async () => {
     alert("O código precisa ter 6 dígitos.");
     return;
   }
-  const resetData = {
+
+  const resetDataPayload = {
     reset_code: codeString,
     new_password: resetData.value.new_password
-  }
-  try {
+  };
 
-    await authStore.ResetPasswordUser({ 
-        resetData
+  console.log("Payload enviado:", resetDataPayload);
+
+  try {
+    await authStore.ResetPasswordEmpresa({
+      reset_code: codeString,
+      new_password: resetData.value.new_password
     });
-    router.push("/login")
+
+    router.push("/");
     alert("Senha alterada com sucesso!");
   } catch (error) {
-    alert("Erro ao resetar a senha. Tente novamente.", error);
+    console.error("Erro ao resetar a senha. Tente novamente.", error);
   }
 };
 </script>
@@ -76,7 +80,7 @@ const resetPassword = async () => {
               type="text"
               maxlength="1"
               class="code-input"
-              v-model="resetData.code[index]"
+              v-model="resetData.reset_code[index]"
               @input="moveFocus($event, index)"
             />
           </div>
@@ -97,7 +101,7 @@ const resetPassword = async () => {
               type="password"
               id="confirmPassword"
               class="marginForm inputForm"
-              v-model="resetData.confirmPassword"
+              v-model="confirmPassword"
               required
             />
             <label for="confirmPassword" class="labelForm">Confirme sua nova senha...</label>

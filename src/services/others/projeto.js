@@ -6,11 +6,20 @@ class ProjetoService {
             const response = await axios.get("projetos/current-projetos/", token);
             return response.data;
         } catch (error) {
-            console.error('API request error:', error); 
+            console.error('API request error:', error);
             throw error;
         }
     }
 
-}
- 
+      async getCandidatosEmpresa(token) {
+        try {
+            const response = await axios.get("projetos/candidatos-da-empresa/", token);
+            return response.data;
+        } catch (error) {
+            console.error('API request error:', error);
+            throw error;
+        }
+    }
+  }
+
 export default new ProjetoService();

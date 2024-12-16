@@ -1,4 +1,11 @@
 <script setup>
+const props = defineProps({
+  Projects: {
+    type: Array,
+    required: true
+  }
+});
+
 const title = "Descubra o Sabor da Nossa Cozinha";
 const Data = "JUNE 25 / 1 AGOS";
 const Categoria = "CULINÁRIA";

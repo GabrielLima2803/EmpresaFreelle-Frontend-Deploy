@@ -66,11 +66,11 @@ export const useAuthStore = defineStore('auth', () => {
           loadingStore.stopLoading();
         }
       }
-    
-      async function ResetPasswordEmpresa(resetData) {
+
+      async function ResetPasswordEmpresa(reset_code, new_passoword) {
         loadingStore.startLoading();
         try {
-          const response = await authService.ResetPasswordEmpresa(resetData); 
+          const response = await authService.ResetPasswordEmpresa(reset_code, new_passoword);
           return response;
         } catch (error) {
           console.error('Erro ao resetar a senha:', error);

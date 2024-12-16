@@ -7,7 +7,7 @@ import GetAllProjects from './Others/GetAllProjects.vue';
 import CreateProject from './Others/CreateProject.vue';
 
 const empresaStore = useEmpresaStore();
-const empresaCurrent = ref({});  
+const empresaCurrent = ref({});
 
 function calculateYearsSince(dateString) {
   const createdAt = new Date(dateString);
@@ -21,7 +21,7 @@ function calculateYearsSince(dateString) {
 }
 
 const provider = ref({
-  foto: '',
+  foto: 'https://i.ibb.co/Qk43Z1V/icon-freelle-empresa.png',
   name: '',
   username: '',
   location: 'São Paulo, Brasil',
@@ -30,7 +30,7 @@ const provider = ref({
   rating: 4.8,
   reviews: 120,
   totalOrders: 0,
-  yearsInPlatform: 0, 
+  yearsInPlatform: 0,
   expertise: '',
   about: '',
 });
@@ -38,16 +38,16 @@ const provider = ref({
 onMounted(() => {
   empresaStore.getMeEmpresa().then(() => {
     empresaCurrent.value = empresaStore.currentEmpresa;
-    
+
     provider.value = {
       foto: empresaCurrent.value.foto.url || '',
       name: empresaCurrent.value.name || '',
       username: empresaCurrent.value.username || '',
-      location: empresaCurrent.value.nacionalidade.nome, 
-      city: empresaCurrent.value.nacionalidade.cidade, 
+      location: empresaCurrent.value.nacionalidade.nome,
+      city: empresaCurrent.value.nacionalidade.cidade,
       language: empresaCurrent.value.linguagem_principal || '',
       rating: 4.8,
-      reviews: 120, 
+      reviews: 120,
       totalOrders: empresaCurrent.value.total_pedidos || 0,
       yearsInPlatform: calculateYearsSince(empresaCurrent.value.created_at),
       expertise: empresaCurrent.value.especializacao || '',
@@ -120,9 +120,9 @@ onMounted(() => {
 </template>
 <style scoped>
 .container {
-  max-width: 1460px; 
-  margin: 0 auto; 
-  padding: 0 20px; 
+  max-width: 1460px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 .title-sobre{
     font-weight: bold;

@@ -1,28 +1,35 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import CardRequest from "../Card/CardRequest.vue";
 import { useAuthStore } from "@/stores";
 import { useRouter } from "vue-router";
+import { useProjetoStore } from "@/stores/others/projeto";
 
 const authStore = useAuthStore();
-const router = useRouter()
+const router = useRouter();
+const projetoStore = useProjetoStore();
+const canditadosEmpresa = ref([]);
 
 const isSidebarVisible = ref(false);
-// const showMenu = ref(false);
 
 const toggleSidebar = () => {
   isSidebarVisible.value = !isSidebarVisible.value;
 };
 
-// const toggleMenu = () => {
-//   showMenu.value = !showMenu.value;
-// };
-
 const logout = () => {
   authStore.LogoutUser();
-  // showMenu.value = false;
-  router.push("/")
+  router.push("/");
 };
+
+onMounted( async () => {
+  const token = authStore.token;
+  await projetoStore.getCandidatosEmpresa(token)
+    .then(() => {
+      canditadosEmpresa.value = projetoStore.candidatosEmpresa;
+      // console.log("Candidatos carregados com sucesso:", projetoStore.candidatosEmpresa);
+    })
+    .catch(err => console.error("Erro ao carregar candidatos:", err));
+});
 </script>
 
 <template>
@@ -34,22 +41,9 @@ const logout = () => {
         </router-link>
       </div>
       <div class="header-right">
-        <HeaderModal />
+        <!-- <HeaderModal /> -->
         <button class="btn" @click="toggleSidebar">Solicitações</button>
         <button class="btn">Português</button>
-
-        <!-- <div v-if="isLogged" class="user-avatar-container">
-          <button @click="toggleMenu" class="user-avatar-button">
-            <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar" />
-          </button>
-
-          <div v-if="showMenu" class="user-menu">
-            <button @click="logout">Sair</button>
-            <router-link to="/profile">
-              <p>Ver perfil</p>
-            </router-link>
-          </div>
-        </div> -->
 
         <div class="auth-buttons">
           <button @click="logout" class="btn btn-i">Sair</button>
@@ -61,7 +55,7 @@ const logout = () => {
   <!-- Sidebar -->
   <div v-if="isSidebarVisible" class="sidebar">
     <div class="sidebar-content">
-      <CardRequest/>
+      <CardRequest :canditadosEmpresa="projetoStore.candidatosEmpresa"/>
     </div>
   </div>
 </template>
