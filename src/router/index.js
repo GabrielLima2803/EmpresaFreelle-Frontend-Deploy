@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,16 +6,43 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: () => import('../views/LoginView.vue'),
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      path: '/cadastro',
+      name: 'Register',
+      component: () => import('../views/RegisterView.vue')
     },
+    {
+      path: '/forgot-password',
+      name: 'ForgotPassword',
+      component: () => import('../views/ForgotPasswordView.vue'),
+    },
+    {
+      path: '/reset-password',
+      name: 'ResetPassword',
+      component: () => import('../views/ResetPasswordView.vue'),
+    },
+    {
+      path: '/home',
+      name: 'Profile',
+      component: () => import('../views/ProfileView.vue'),
+    },
+    {
+      path: '/home/update',
+      name: 'UpdateProfile',
+      component: () => import('@/components/Profile/Modal/UpdateProfile.vue'),
+    },
+    {
+      path: '/home/images',
+      name: 'Images',
+      component: () => import('@/components/Profile/Modal/CreateImage.vue'),
+    }
+    // {
+    //   path: '/:pathMatch(.*)*',
+    //   name: 'NotFound',
+    //   component: () => import('../views/NotFoundView.vue'),
+    // }
   ],
 })
 
