@@ -52,7 +52,7 @@ const formattedDateRange = formatDateRange(
 </script>
 
 <template>
-  <div v-if="!props.Projects.isExpired" class="card">
+  <div v-if="!props.Projects.isExpired && !props.Projects.isClosed" class="card">
     <div class="box-image">
       <img :src="props.Projects.foto?.url || defaultImage" :alt="props.Projects.foto?.description || 'Imagem do projeto'" />
     </div>
@@ -75,9 +75,9 @@ const formattedDateRange = formatDateRange(
     </div>
   </div>
 
-  <div v-if="props.Projects.isExpired" class="card expired">
+  <div v-if="props.Projects.isExpired || props.Projects.isClosed" class="card expired">
     <div class="box-image">
-      <img src="https://via.placeholder.com/150" alt="Imagem da vaga" />
+      <img :src="props.Projects.foto?.url || defaultImage" :alt="props.Projects.foto?.description || 'Imagem do projeto'" />
     </div>
     <div class="box-information">
       <div class="header">
@@ -93,7 +93,7 @@ const formattedDateRange = formatDateRange(
         <p>{{ props.Projects.descricao }}</p>
         <div class="wrap-button">
           <button class="emprego-ine">Emprego Inexistente</button>
-          <!-- <p class="emprego-ine">Taxa de 50%</p> -->
+          <!-- <button class="delete-button btn-ine" @click="deleteProject">Excluir</button> -->
         </div>
       </div>
     </div>
@@ -123,6 +123,7 @@ const formattedDateRange = formatDateRange(
  padding-right: 2em;
 
 }
+
 .box-image img {
   width: 250px;
   height: 210px;
@@ -205,6 +206,27 @@ const formattedDateRange = formatDateRange(
   background-color: #00546B;
   color: white;
   border-color: #00546B;
+}
+.wrap-button {
+  display: flex;
+  justify-content: flex-start; /* Alinha os botões à esquerda */
+  gap: 16px; /* Espaçamento entre os botões */
+  margin-top: 16px;
+}
+
+.emprego-ine {
+  background-color: transparent;
+  color: #6B0000;
+  padding: 8px 12px;
+  border: 1px solid #6B0000;
+  cursor: default;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.emprego-ine:hover {
+  background-color: rgba(110, 0, 0, 0.1);
 }
 
 </style>
