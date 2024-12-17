@@ -1,17 +1,29 @@
 <script setup>
 import CardProject from './CardProject.vue'
 import { useProjetoStore } from '@/stores/others/projeto'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 
 const projetoStore = useProjetoStore()
 const isLoading = ref(true)
 
+const showAll = ref(false)
+const maxInitialCards = 3
+
+const displayedProjects = computed(() => {
+  return showAll.value
+    ? projetoStore.currentProjeto 
+    : projetoStore.currentProjeto.slice(0, maxInitialCards) 
+})
+
 onMounted(async () => {
   await projetoStore.getCurrentProjects()
   console.log('Projetos carregados', projetoStore.currentProjeto)
-
   isLoading.value = false
 })
+
+const toggleShowAll = () => {
+  showAll.value = !showAll.value
+}
 </script>
 
 <template>
@@ -19,20 +31,22 @@ onMounted(async () => {
     <div class="container-top">
       <h3 class="title">Empregos Gerados</h3>
     </div>
+
     <div class="cards">
-      <!-- Iterando sobre os projetos e passando cada projeto como prop -->
       <CardProject
-        v-for="(projeto, index) in projetoStore.currentProjeto"
-        :key="index"
+        v-for="projeto in displayedProjects"
+        :key="projeto.id"
         :Projects="projeto"
       />
     </div>
+
     <div class="container-bottom">
-      <h3 class="title btn">Ver mais +</h3>
+      <h3 class="title btn" @click="toggleShowAll">
+        {{ showAll ? 'Ver menos -' : 'Ver mais +' }}
+      </h3>
     </div>
   </div>
 </template>
-
 <style scoped>
 .container-top {
   margin-top: 10vh;
