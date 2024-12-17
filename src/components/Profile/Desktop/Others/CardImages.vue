@@ -1,13 +1,11 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import { useEmpresaStore } from '@/stores';
+// import axios from 'axios';
 
-const images = ref([
-  { src: 'https://via.placeholder.com/150', alt: 'Descrição da imagem 1' },
-  { src: 'https://via.placeholder.com/150', alt: 'Descrição da imagem 2' },
-  { src: 'https://via.placeholder.com/150', alt: 'Descrição da imagem 3' },
-  { src: 'https://via.placeholder.com/150', alt: 'Descrição da imagem 4' },
-  { src: 'https://via.placeholder.com/150', alt: 'Descrição da imagem 5' },
-]);
+const empresaStore = useEmpresaStore()
+
+const defaultImage = "https://via.placeholder.com/150"
 
 const props = defineProps({
   textoSecao: {
@@ -42,16 +40,33 @@ const calculatePercentage = (stars) => {
 //   alert(`Você avaliou ${rating} estrelas!`);
 //   selectedRating.value = rating;
 // };
+
+onMounted(async () => {
+  await empresaStore.getMeEmpresa()
+  // const userId = empresaStore.currentEmpresa.id;
+  // // const response = await axios.get(`/api/user/${userId}/ratings/`);
+  // const data = await response.json();
+
+  // if (response.ok) {
+  //   ratings.value = {
+  //     5: data.rating >= 4.5 ? data.total_avaliacoes : 0,
+  //     4: data.rating >= 3.5 ? data.total_avaliacoes : 0,
+  //     3: data.rating >= 2.5 ? data.total_avaliacoes : 0,
+  //     2: data.rating >= 1.5 ? data.total_avaliacoes : 0,
+  //     1: data.rating >= 0.5 ? data.total_avaliacoes : 0,
+  //   }
+  // }
+})
 </script>
 
 <template>
   <div class="container">
     <div>
-      <h3 class="title">Imagens que falam, histórias que se revelam +</h3>
+      <router-link to="/home/images" class="title">Imagens que falam, histórias que se revelam +</router-link>
     </div>
     <div class="projects">
-      <div v-for="image in images" :key="image.src">
-        <img :src="image.src" :alt="image.alt" />
+      <div v-for="image in empresaStore.currentEmpresa.portifolio" :key="image.src">
+        <img :src="image.image ? image.image.file : defaultImage" :alt="image.alt" />
       </div>
     </div>
 
@@ -61,23 +76,23 @@ const calculatePercentage = (stars) => {
     </div>
     <div class="border"></div>
     <div class="rating">
-    <div>
-      <h3 class="title">Avaliações</h3>
-      <p class="review">{{ (totalRatings / 1000).toFixed(1) }}k avaliações</p>
-    </div>
-
-    <div class="rating-bars">
-      <div v-for="star in [5, 4, 3, 2, 1]" :key="star" class="rating-bar">
-        <span class="star-label">{{ star }} estrelas</span>
-        <div class="bar-container">
-          <div class="bar" :style="{ width: calculatePercentage(star) + '%' }"></div>
-        </div>
-        <span class="rating-count">({{ ratings[star] }})</span>
-      </div>
-    </div>
-
-    <p class="details">Classificação detalhada</p>
+  <div>
+    <h3 class="title">Avaliações</h3>
+    <p class="review">{{ (totalRatings / 1000).toFixed(1) }}k avaliações</p>
   </div>
+
+  <div class="rating-bars">
+    <div v-for="star in [5, 4, 3, 2, 1]" :key="star" class="rating-bar">
+      <span class="star-label">{{ star }} estrelas</span>
+      <div class="bar-container">
+        <div class="bar" :style="{ width: calculatePercentage(star) + '%' }"></div>
+      </div>
+      <span class="rating-count">({{ ratings[star] }})</span>
+    </div>
+  </div>
+
+  <p class="details">Classificação detalhada</p>
+</div>
   </div>
 </template>
 
@@ -90,7 +105,9 @@ const calculatePercentage = (stars) => {
 }
 .title {
   font-weight: bold;
-  text-decoration: solid;
+  color: black;
+  text-decoration: underline;
+  margin-bottom: 15px;
 }
 .classe h3 {
   font-weight: bold;

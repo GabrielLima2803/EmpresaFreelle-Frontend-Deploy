@@ -38,10 +38,52 @@ export const useProjetoStore = defineStore('projeto', () => {
           loadingStore.stopLoading();
         }
   }
+
+  const postProjeto = async (formData) => {
+    loadingStore.startLoading();
+    try {
+      const data = await projetoService.postProjeto(formData);
+      console.log('Projeto criado:', data);
+    } catch (error) {
+      console.error('Erro ao cadastrar o projeto:', error);
+    } finally {
+      loadingStore.stopLoading();
+    }
+  };
+
+  const deleteProjeto = async (projetoId) => {
+    loadingStore.startLoading();
+    try {
+      await projetoService.deleteProjeto(projetoId);
+      alert('Projeto excluído com sucesso!');
+    } catch (error) {
+      console.error('Erro ao excluir o projeto:', error);
+    } finally {
+      loadingStore.stopLoading();
+    }
+  };
+
+  const selectCandidato = async (projetoId, token, application_id) => {
+    loadingStore.startLoading();
+    try {
+      console.log("Id Canditado Store", application_id)
+      const response = await projetoService.selectCandidato(projetoId, token, application_id);
+      console.log('Candidato selecionado com sucesso:', response);
+      return response;
+    } catch (error) {
+      console.error('Erro ao selecionar o candidato:', error);
+      throw error;
+    } finally {
+      loadingStore.stopLoading();
+    }
+  };
     return {
         currentProjeto,
         candidatosEmpresa,
         getCurrentProjects,
-        getCandidatosEmpresa
+        getCandidatosEmpresa,
+        postProjeto,
+        deleteProjeto,
+        selectCandidato
     }
 })

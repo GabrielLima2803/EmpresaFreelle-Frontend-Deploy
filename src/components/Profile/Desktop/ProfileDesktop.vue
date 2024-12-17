@@ -60,7 +60,6 @@ onMounted(() => {
 
 <template>
     <HeaderDesktop/>
-    {{empresaStore.currentEmpresa.foto}}
     <div class="container">
   <div class="profile-container">
     <div class="profile-left">
@@ -123,6 +122,9 @@ onMounted(() => {
   max-width: 1460px;
   margin: 0 auto;
   padding: 0 20px;
+}
+.mt{
+  margin-top: 10em;
 }
 .title-sobre{
     font-weight: bold;

@@ -36,7 +36,7 @@ onMounted( async () => {
   <div class="header">
     <div class="header-container">
       <div class="header-left">
-        <router-link to="/" class="btn">
+        <router-link class="btn">
           <img src="https://i.ibb.co/Qk43Z1V/icon-freelle-empresa.png" alt="Logo" class="img" />
         </router-link>
       </div>

@@ -1,14 +1,24 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from "vue";
+import { usePortifolioStore } from "@/stores/others/portifolio";
+import { useRouter } from "vue-router";
+import { useCategoriaStore } from "@/stores/others/categoria";
+
+
+const categoriaStore = useCategoriaStore();
+const router = useRouter();
+const portifolioStore = usePortifolioStore();
 
 const imageFile = ref(null);
+const categoriaSelecionada = ref("");
+
 const handleDrop = (event) => {
   event.preventDefault();
   const file = event.dataTransfer.files[0];
-  if (file && file.type.startsWith('image/')) {
+  if (file && file.type.startsWith("image/")) {
     imageFile.value = file;
   } else {
-    alert('Por favor, arraste apenas imagens.');
+    alert("Por favor, arraste apenas imagens.");
   }
 };
 
@@ -18,12 +28,36 @@ const handleDragOver = (event) => {
 
 const handleInputChange = (event) => {
   const file = event.target.files[0];
-  if (file && file.type.startsWith('image/')) {
+  if (file && file.type.startsWith("image/")) {
     imageFile.value = file;
   } else {
-    alert('Por favor, selecione apenas imagens.');
+    alert("Por favor, selecione apenas imagens.");
   }
 };
+
+const submitPortifolio = async () => {
+  if (!imageFile.value || !categoriaSelecionada.value) {
+    alert("Por favor, selecione uma imagem e uma categoria.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("image", imageFile.value);
+  formData.append("categoria", categoriaSelecionada.value);
+
+  try {
+    await portifolioStore.postImagePortifolio(formData);
+    alert("Projeto adicionado com sucesso!");
+    router.push("/home")
+  } catch (error) {
+    console.error("Erro ao enviar o portfólio:", error);
+    alert("Erro ao adicionar o projeto ao portfólio.");
+  }
+};
+
+onMounted(async () => {
+  await categoriaStore.getAllCategorias();
+});
 </script>
 
 <template>
@@ -37,11 +71,8 @@ const handleInputChange = (event) => {
         <div class="border"></div>
       </div>
       <div class="box-bottom">
-        <div
-          class="image-box"
-          @dragover="handleDragOver"
-          @drop="handleDrop"
-        >
+        <!-- Arrastar ou Selecionar Imagem -->
+        <div class="image-box" @dragover="handleDragOver" @drop="handleDrop">
           <p v-if="!imageFile">Imagem do projeto +</p>
           <p v-else class="image-select">Imagem carregada: {{ imageFile.name }}</p>
           <input
@@ -51,12 +82,29 @@ const handleInputChange = (event) => {
             @change="handleInputChange"
           />
         </div>
+
+        <!-- Selecionar Categoria -->
         <div class="box-category">
-          <select class="category-select">
+          <select
+            v-model="categoriaSelecionada"
+            class="category-select"
+          >
             <option value="">Categoria</option>
+            <option
+              v-for="categoria in categoriaStore.categorias"
+              :key="categoria.id"
+              :value="categoria.id"
+            >
+              {{ categoria.nome }}
+            </option>
           </select>
         </div>
-        <button class="btn-submit">Adicionar Projeto</button>
+
+        <!-- Botão Submit -->
+        <button class="btn-submit" @click="submitPortifolio">
+          Adicionar Projeto
+        </button>
+
         <p class="recaptcha-text">
           Protegido por reCAPTCHA -
           <a href="#" class="link">Privacidade</a> |
@@ -66,6 +114,7 @@ const handleInputChange = (event) => {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 body {

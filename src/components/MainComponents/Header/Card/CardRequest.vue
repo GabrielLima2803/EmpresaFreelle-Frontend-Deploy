@@ -1,5 +1,7 @@
 <script setup>
 import { defineProps } from 'vue';
+import { useProjetoStore } from '@/stores/others/projeto';
+import { useAuthStore } from '@/stores/auth/auth';
 
 const props = defineProps({
   canditadosEmpresa: {
@@ -7,14 +9,30 @@ const props = defineProps({
     required: true,
   },
 });
+
+const projetoStore = useProjetoStore();
+const authStore = useAuthStore();
+
+// Função para aceitar a vaga de um candidato
+const aceitarVaga = async (projetoId, application_id) => {
+  console.log("Projeto ID:", projetoId);
+  console.log("Application ID:", application_id);
+  const token = authStore.token;
+  try {
+    const response = await projetoStore.selectCandidato(projetoId, token, application_id);
+  window.location.reload();
+    console.log('Candidato selecionado:', response);
+  } catch (error) {
+    console.error('Erro ao aceitar o candidato:', error);
+  }
+};
 </script>
 
 <template>
   <div class="container">
-    <!-- Iterar sobre os candidatos de todos os projetos -->
     <div v-for="(projeto, index) in props.canditadosEmpresa" :key="index">
 
-      <div v-for="(candidato, idx) in projeto.candidatos" :key="idx" class="candidate-box">
+      <div v-for="(candidato, idx) in projeto.candidatos.filter(c => c.status === 'Pendente')" :key="idx" class="candidate-box">
         <div class="box-img">
           <img :src="candidato.freelancer_user?.foto || 'https://via.placeholder.com/150'" alt="Imagem do candidato">
         </div>
@@ -26,12 +44,13 @@ const props = defineProps({
         </div>
 
         <div>
-          <button @click="aceitarVaga(candidato)">Aceitar</button>
+          <button @click="aceitarVaga(projeto.id_projeto, candidato.id)">Aceitar</button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .container {
