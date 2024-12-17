@@ -71,7 +71,6 @@ onMounted(async () => {
         <div class="border"></div>
       </div>
       <div class="box-bottom">
-        <!-- Arrastar ou Selecionar Imagem -->
         <div class="image-box" @dragover="handleDragOver" @drop="handleDrop">
           <p v-if="!imageFile">Imagem do projeto +</p>
           <p v-else class="image-select">Imagem carregada: {{ imageFile.name }}</p>

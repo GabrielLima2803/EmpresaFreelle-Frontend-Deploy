@@ -5,17 +5,11 @@
   <div id="footerMenu">
     <div class="icons">
       <RouterLink to="/">
-        <i class="mdi mdi-home-outline" />
-      </RouterLink>
+        <img src="https://i.ibb.co/ykJmmwx/Group-134.jpg">      </RouterLink>
       <RouterLink to="/login">
-        <i class="mdi mdi-account-circle-outline" />
-      </RouterLink>
+        <img src="https://i.ibb.co/nQ4XGhZ/Group-60.png">      </RouterLink>
       <RouterLink to="/job-page">
-        <i class="mdi mdi-account-search" />
-      </RouterLink>
-      <RouterLink to="/adicao-job">
-        <i class="mdi mdi-palette-advanced" />
-      </RouterLink>
+        <img src="https://i.ibb.co/ngmJ1MQ/Group-227.png">      </RouterLink>
     </div>
   </div>
 </template>
@@ -43,7 +37,7 @@
   font-size: 2rem;
 }
 
-.icons a {
+.img a {
   color: black;
   transition: color 0.3s;
 }

@@ -6,20 +6,20 @@ const deleteProject = async () => {
   try {
     await projetoStore.deleteProjeto(props.Projects.id);
     alert('Projeto excluído com sucesso!');
-  window.location.reload();
-
+    window.location.reload();
   } catch (error) {
     console.error('Erro ao excluir o projeto:', error);
   }
 };
+
 const props = defineProps({
   Projects: {
     type: Object,
     required: true,
   },
 });
-const defaultImage = "https://via.placeholder.com/150"
 
+const defaultImage = "https://via.placeholder.com/150";
 
 const calculateVagas = (candidatos, maxCandidates) => {
   const currentCandidates = candidatos.length;
@@ -52,7 +52,7 @@ const formattedDateRange = formatDateRange(
 </script>
 
 <template>
-  <div v-if="!props.Projects.isExpired && !props.Projects.isClosed" class="card">
+  <div v-if="!props.Projects.isExpired && !props.Projects.isClosed" class="card andamento">
     <div class="box-image">
       <img :src="props.Projects.foto?.url || defaultImage" :alt="props.Projects.foto?.description || 'Imagem do projeto'" />
     </div>
@@ -61,9 +61,7 @@ const formattedDateRange = formatDateRange(
         <h2 class="title">{{ props.Projects.titulo }}</h2>
         <div class="wrap">
           <p class="details">{{ formattedDateRange }} | {{ props.Projects.categoria[0].nome }}</p>
-          <p class="details">
-            Vagas: {{ vagas }} | Salário: R${{ props.Projects.orcamento }}
-          </p>
+          <p class="details">Vagas: {{ vagas }} | Salário: R${{ props.Projects.orcamento }}</p>
         </div>
       </div>
       <div class="description">
@@ -84,16 +82,13 @@ const formattedDateRange = formatDateRange(
         <h2 class="title">{{ props.Projects.titulo }}</h2>
         <div class="wrap">
           <p class="details">{{ formattedDateRange }} | {{ props.Projects.categoria[0].nome }}</p>
-          <p class="details">
-            Vagas: {{ vagas }} | Salário: R${{ props.Projects.orcamento }}
-          </p>
+          <p class="details">Vagas: {{ vagas }} | Salário: R${{ props.Projects.orcamento }}</p>
         </div>
       </div>
       <div class="description">
         <p>{{ props.Projects.descricao }}</p>
         <div class="wrap-button">
           <button class="emprego-ine">Emprego Inexistente</button>
-          <!-- <button class="delete-button btn-ine" @click="deleteProject">Excluir</button> -->
         </div>
       </div>
     </div>
@@ -103,115 +98,72 @@ const formattedDateRange = formatDateRange(
 <style scoped>
 .card {
   display: flex;
-  align-items: flex-start;
   gap: 16px;
-  padding: 25px;
+  padding: 20px;
+  border-radius: 14px;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  max-width: 1200px;
-  min-width: 1200px;
+  width: 900px;
 }
 
-.expired{
-  border: #6B0000 solid 1px;
-  background-color: rgba(110, 0, 0, 0.2);
+.expired {
+  background-color: rgba(110, 0, 0, 0.1);
+  border: 1px solid #6B0000;
 }
 
-.box-image{
- padding-right: 2em;
+.andamento {
+  border: 2px solid #00796b;
+}
 
+.box-image {
+  flex: 0 0 220px;
+  height: 140px;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .box-image img {
-  width: 250px;
-  height: 210px;
-  border-radius: 8px;
-  object-fit: cover;
-}
-.image-box:hover {
-  background-color: #f9f9f9;
-}
-.emprego-ine{
-  background-color: rgba(110, 0, 0, 0);
-  color: #6B0000;
-  padding: 8px 12px;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  cursor: auto;
-  width: 210px;
-  font-weight: bold;
-  margin-top: 16px;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-.file-input {
-  position: absolute;
-  opacity: 0;
   width: 100%;
   height: 100%;
-  cursor: pointer;
+  object-fit: cover;
 }
+
 .box-information {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   flex: 1;
 }
-.wrap{
-    display: flex;
-    gap: 10px;
-}
+
 .header .title {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
   color: #333;
   margin-bottom: 4px;
 }
 
-.header .details {
-  font-size: 12px;
+.details {
+  font-size: 14px;
   color: #777;
   margin-bottom: 8px;
-}
-
-.vagas-salario {
-  font-size: 12px;
-  color: #444;
-  margin-bottom: 12px;
 }
 
 .description p {
   font-size: 16px;
   color: #555;
-  margin-bottom: 12px;
 }
 
 .delete-button {
   background-color: white;
   color: #00546B;
-  position: relative;
-  bottom: -3.5em;
-  padding: 8px 12px;
   border: 1px solid #a3a2a2;
-  cursor: pointer;
+  padding: 8px 12px;
   font-size: 14px;
-  width: 150px;
   font-weight: bold;
-  margin-top: 16px;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: 0.3s;
 }
+
 .delete-button:hover {
   background-color: #00546B;
   color: white;
-  border-color: #00546B;
-}
-.wrap-button {
-  display: flex;
-  justify-content: flex-start; /* Alinha os botões à esquerda */
-  gap: 16px; /* Espaçamento entre os botões */
-  margin-top: 16px;
 }
 
 .emprego-ine {
@@ -219,14 +171,23 @@ const formattedDateRange = formatDateRange(
   color: #6B0000;
   padding: 8px 12px;
   border: 1px solid #6B0000;
-  cursor: default;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.emprego-ine:hover {
-  background-color: rgba(110, 0, 0, 0.1);
-}
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    width: 90%;
+  }
 
+  .box-image {
+    width: 100%;
+    height: 160px;
+  }
+
+  .box-information {
+    text-align: center;
+  }
+}
 </style>

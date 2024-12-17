@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { HeaderDesktop, FooterDesktop } from '@/components';
+import { HeaderDesktop, FooterMobile } from '@/components';
 import { useEmpresaStore } from '@/stores';
 import CardImages from "@/components/Profile/Others/CardImages.vue";
 import GetAllProjects from '@/components/Profile/Others/GetAllProjects.vue';
@@ -60,7 +60,7 @@ onMounted(() => {
 
 <template>
     <HeaderDesktop/>
-
+    
     <div class="container">
   <div class="profile-container">
     <div class="profile-left">
@@ -116,8 +116,11 @@ onMounted(() => {
       <GetAllProjects/>
       <CreateProject/>
     </div>
-    <FooterDesktop/>
+    <FooterMobile/>
 </template>
+
+
+
 <style scoped>
 .container {
   max-width: 1460px;

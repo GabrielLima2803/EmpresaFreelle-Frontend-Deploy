@@ -26,7 +26,6 @@ onMounted( async () => {
   await projetoStore.getCandidatosEmpresa(token)
     .then(() => {
       canditadosEmpresa.value = projetoStore.candidatosEmpresa;
-      // console.log("Candidatos carregados com sucesso:", projetoStore.candidatosEmpresa);
     })
     .catch(err => console.error("Erro ao carregar candidatos:", err));
 });
@@ -41,7 +40,6 @@ onMounted( async () => {
         </router-link>
       </div>
       <div class="header-right">
-        <!-- <HeaderModal /> -->
         <button class="btn" @click="toggleSidebar">Solicitações</button>
         <button class="btn">Português</button>
 
@@ -52,7 +50,6 @@ onMounted( async () => {
     </div>
   </div>
 
-  <!-- Sidebar -->
   <div v-if="isSidebarVisible" class="sidebar">
     <div class="sidebar-content">
       <CardRequest :canditadosEmpresa="projetoStore.candidatosEmpresa"/>
